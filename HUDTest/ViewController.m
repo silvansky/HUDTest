@@ -8,21 +8,29 @@
 
 #import "ViewController.h"
 
+#import <ReactiveCocoa.h>
+#import <SAMHUDView.h>
+
 @interface ViewController ()
-            
+
+@property (nonatomic, weak) IBOutlet UIButton *showHUDButton;
 
 @end
 
 @implementation ViewController
             
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
 	[super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+	self.showHUDButton.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+		[[[SAMHUDView alloc] initWithTitle:@"Loading" loading:YES] show];
+		return [RACSignal empty];
+	}];
 }
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
 	[super didReceiveMemoryWarning];
-	// Dispose of any resources that can be recreated.
 }
 
 @end
